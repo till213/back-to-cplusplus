@@ -1,0 +1,5 @@
+// the configured options and settings for HelloWorld
+namespace Version {
+    const auto HelloWorld_VERSION_MAJOR = @HelloWorld_VERSION_MAJOR@;
+    const auto HelloWorld_VERSION_MINOR = @HelloWorld_VERSION_MINOR@;
+}
