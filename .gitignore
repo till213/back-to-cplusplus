@@ -14,8 +14,7 @@ CMakeDoxygenDefaults.cmake
 CMakeDoxyfile.in
 
 # Binaries
-src/apps/HelloWorld/hello
-src/struct/LinkedHashMap/linkhm
+bin
 
 # Generated Code
 generated
