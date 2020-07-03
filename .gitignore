@@ -1,4 +1,4 @@
-#Cmake
+#CMake
 CMakeLists.txt.user
 CMakeCache.txt
 CMakeFiles
@@ -10,9 +10,17 @@ install_manifest.txt
 compile_commands.json
 CTestTestfile.cmake
 _deps
+CMakeDoxygenDefaults.cmake
+CMakeDoxyfile.in
 
 # Binaries
 src/apps/HelloWorld/hello
+src/struct/LinkedHashMap/linkhm
 
 # Generated Code
 generated
+
+# HTML documentation
+html
+Doxyfile.doc
+

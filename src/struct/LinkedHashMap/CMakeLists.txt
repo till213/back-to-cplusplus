@@ -1,0 +1,41 @@
+cmake_minimum_required(VERSION 3.10)
+
+# set the project name
+project(
+    LinkedHashMap
+    DESCRIPTION "A HashMap which keeps insertion order"
+)
+
+# set the project name and version
+project(LinkedHashMap VERSION 1.0)
+
+# specify the C++ standard
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED True)
+
+# add the executable
+add_executable(linkhm main.cpp)
+
+# Documentation - require dot, treat the other components as optional
+find_package(Doxygen
+             REQUIRED dot
+             OPTIONAL_COMPONENTS mscgen dia)
+
+option(BUILD_DOCUMENTATION "Create and install the HTML based API documentation (requires Doxygen)" ${DOXYGEN_FOUND})
+
+if(BUILD_DOCUMENTATION)
+    if(NOT DOXYGEN_FOUND)
+         message(FATAL_ERROR "Doxygen is needed to build the documentation.")
+    endif()
+
+    set(DOXYGEN_GENERATE_HTML YES)
+    set(DOXYGEN_GENERATE_MAN NO)
+    set(DOXYGEN_OUTPUT_DIRECTORY docs)
+    set(DOXYGEN_JAVADOC_AUTOBRIEF YES)
+
+    doxygen_add_docs(
+        doc
+        ${PROJECT_SOURCE_DIR}
+        COMMENT "Generate html pages"
+    )
+endif()
