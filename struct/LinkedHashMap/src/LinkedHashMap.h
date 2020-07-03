@@ -6,6 +6,8 @@ using namespace std;
 
 /*!
  * A hashmap which keeps track of the insertion order.
+ * All #insert(), #get(), #contains() and #remove()
+ * operations work in constant O(1) time.
  */
 template <class K, class V>
 class LinkedHashMap

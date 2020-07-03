@@ -15,6 +15,7 @@ CMakeDoxyfile.in
 
 # Binaries
 bin
+build
 
 # Generated Code
 generated
