@@ -105,7 +105,7 @@ public:
      * @see cend()
      * @return the constant #Iterator which points to the first element
      */
-    Iterator cbegin() const {
+    const Iterator cbegin() const {
         return m_values.cbegin();
     }
 
@@ -114,7 +114,7 @@ public:
      * 
      * @return the constant #Iterator which points one past the last element
      */
-    Iterator cend() const {
+    const Iterator cend() const {
         return m_values.cend();
     }
 

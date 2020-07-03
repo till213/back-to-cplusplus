@@ -16,14 +16,14 @@ int main() {
     cout << "Has Jill's number: " << phoneBook.contains("Jill") << endl;
     phoneBook.remove("Jill");
     cout << "Still has Jill's number: " << phoneBook.contains("Jill") << endl;
-    for (auto it = phoneBook.cbegin(); it != phoneBook.cend(); ++it) {
-        cout << "Phone number: " << *it << endl;
+    for (const auto number : phoneBook) {
+        cout << "Phone number: " << number << endl;
     }
 
     phoneBook.insert("Jake", 54321);
     cout << "Jake's new number: " << *(phoneBook.get("Jake")) << endl;
-    for (auto it = phoneBook.cbegin(); it != phoneBook.cend(); ++it) {
-        cout << "Phone number: " << *it << endl;
+    for (const auto number : phoneBook) {
+        cout << "Phone number: " << number << endl;
     }
 
     return 0;
