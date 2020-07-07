@@ -9,7 +9,7 @@ using namespace std;
  * All #insert(), #get(), #contains() and #remove()
  * operations work in constant O(1) time.
  */
-template <class K, class V>
+template <typename K, typename V>
 class LinkedHashMap
 {
 
@@ -27,13 +27,11 @@ public:
      */
     void insert(const K &key, const V &value)
     {
-        auto it = m_access.find(key);
-        if (it != m_access.end())
-        {
+        if (auto it = m_access.find(key); it != m_access.end()) {
             m_values.erase(it->second);
         }
         m_values.push_front(value);
-        m_access.insert(make_pair(key, m_values.begin()));
+        m_access.insert({key, m_values.begin()});
     }
 
     /**
@@ -47,9 +45,7 @@ public:
      */
     Iterator get(const K &key) const
     {
-        const auto it = m_access.find(key);
-        if (it != m_access.end())
-        {
+        if (const auto it = m_access.find(key); it != m_access.end()) {
             return it->second;
         }
         return m_values.end();
@@ -75,8 +71,7 @@ public:
      */
     void remove(const K &key)
     {
-        auto it = m_access.find(key);
-        if (it != m_access.end()) {
+        if (const auto it = m_access.find(key); it != m_access.end()) {
             m_values.erase(it->second);
             m_access.erase(it);
         }
