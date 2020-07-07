@@ -1,11 +1,11 @@
 cmake_minimum_required(VERSION 3.10)
 
+# set the project name
+project(HelloWorld)
+
 # includes
 set (CMAKE_MODULE_PATH "${CMAKE_MODULE_PATH};${CMAKE_CURRENT_SOURCE_DIR}/../../cmake")
 include(Common)
-
-# set the project name
-project(HelloWorld)
 
 # set the project name and version
 project(HelloWorld VERSION 1.0)

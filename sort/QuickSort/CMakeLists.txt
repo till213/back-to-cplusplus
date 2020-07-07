@@ -1,14 +1,14 @@
 cmake_minimum_required(VERSION 3.10)
 
-# includes
-set (CMAKE_MODULE_PATH "${CMAKE_MODULE_PATH};${CMAKE_CURRENT_SOURCE_DIR}/../../cmake")
-include(Common)
-
 # set the project name
 project(
     QuickSort
     DESCRIPTION "QuickSort using parallel STL algorithms"
 )
+
+# includes
+set (CMAKE_MODULE_PATH "${CMAKE_MODULE_PATH};${CMAKE_CURRENT_SOURCE_DIR}/../../cmake")
+include(Common)
 
 # set the project name and version
 project(QuickSort VERSION 1.0)

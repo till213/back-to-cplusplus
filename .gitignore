@@ -22,5 +22,5 @@ generated
 
 # HTML documentation
 html
-Doxyfile.doc
+Doxyfile.doc*
 

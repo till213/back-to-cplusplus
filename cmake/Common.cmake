@@ -20,11 +20,9 @@ if(BUILD_DOCUMENTATION)
     set(DOXYGEN_OUTPUT_DIRECTORY docs)
     set(DOXYGEN_JAVADOC_AUTOBRIEF YES)
 
-    message(INFO ${PROJECT_SOURCE_DIR})
-
     doxygen_add_docs(
-        doc
-        ${PROJECT_SOURCE_DIR}
+        doc-${PROJECT_NAME}
+        ${PROJECT_SOURCE_DIR}/src
         COMMENT "Generate html pages"
     )
 endif()
