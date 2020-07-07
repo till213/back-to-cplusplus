@@ -1,11 +1,16 @@
+// Parallel execution STL not yet available for e.g.
+// clang++ (XCode) on macOS
+// #define PARALLEL
+
 #include <algorithm>
 #include <vector>
 #include <random>
 #include <iostream>
 #include <chrono>
 #include <sstream>
-// Not yet available for clang++ (XCode) on macOS
+#ifdef PARALLEL
 #include <execution>
+#endif
 
 using namespace std;
 using std::chrono::duration;
@@ -24,6 +29,8 @@ void quicksort(ForwardIt first, ForwardIt last)
 
     ForwardIt middle1;
     ForwardIt middle2;
+
+#ifdef PARALLEL
     if (dist < threshold)
     {
         middle1 = partition(std::execution::seq, first, last,
@@ -38,11 +45,12 @@ void quicksort(ForwardIt first, ForwardIt last)
         middle2 = partition(std::execution::par, middle1, last,
                             [pivot](const auto &em) { return !(pivot < em); });
     }
-
-    // ForwardIt middle1 = partition(first, last,
-    //                               [pivot](const auto &em) { return em < pivot; });
-    // ForwardIt middle2 = partition(middle1, last,
-    //                               [pivot](const auto &em) { return !(pivot < em); });
+#else
+    middle1 = partition(first, last,
+                        [pivot](const auto &em) { return em < pivot; });
+    middle2 = partition(middle1, last,
+                        [pivot](const auto &em) { return !(pivot < em); });
+#endif
     quicksort(first, middle1);
     quicksort(middle2, last);
 }
@@ -58,16 +66,22 @@ auto randomNumberBetween = [](int low, int high) {
 int main(int argc, char *argv[])
 {
     size_t size;
-    if (argc > 1) {
+    if (argc > 1)
+    {
         stringstream s(argv[1]);
         s >> size;
-        if (argc > 2) {
+        if (argc > 2)
+        {
             s = stringstream(argv[2]);
             s >> threshold;
-        } else {
+        }
+        else
+        {
             threshold = size;
         }
-    } else {
+    }
+    else
+    {
         size = 10000;
         threshold = size;
     }

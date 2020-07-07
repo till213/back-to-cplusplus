@@ -17,7 +17,13 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 # add the executable
 add_executable(qsort src/main.cpp)
 target_compile_features(qsort PUBLIC cxx_std_17)
-target_link_libraries (qsort -ltbb)
+
+# features and libraries
+option(DO_PARALLEL "Build with parallel STL support" OFF)
+if(DO_PARALLEL)
+    add_definitions(-DPARALLEL)
+    target_link_libraries (qsort -ltbb)
+endif()
 
 # Documentation - require dot, treat the other components as optional
 find_package(Doxygen
