@@ -64,7 +64,9 @@
         "typeinfo": "cpp",
         "utility": "cpp",
         "memory_resource": "cpp",
-        "__cxx_version": "cpp"
+        "__cxx_version": "cpp",
+        "numeric": "cpp",
+        "random": "cpp"
     },
     "C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools",
     "C_Cpp.errorSquiggles": "Enabled"
