@@ -13,12 +13,11 @@ project(QuickSort VERSION 1.0)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17")
-
 
 # add the executable
 add_executable(qsort src/main.cpp)
 target_compile_features(qsort PUBLIC cxx_std_17)
+target_link_libraries (qsort -ltbb)
 
 # Documentation - require dot, treat the other components as optional
 find_package(Doxygen

@@ -3,16 +3,16 @@
 #include <random>
 #include <iostream>
 #include <chrono>
-#include <thread>
+#include <sstream>
 // Not yet available for clang++ (XCode) on macOS
-// #include <execution>
+#include <execution>
 
 using namespace std;
 using std::chrono::duration;
 using std::chrono::duration_cast;
 using std::chrono::high_resolution_clock;
 
-const size_t threshold = 10; // some value
+static size_t threshold;
 
 template <class ForwardIt>
 void quicksort(ForwardIt first, ForwardIt last)
@@ -22,19 +22,27 @@ void quicksort(ForwardIt first, ForwardIt last)
     size_t dist = distance(first, last);
     auto pivot = *next(first, dist / 2);
 
-    // parallel::execution_policy exec_pol = parallel::par;
-    // if (distance < threshold)
-    //     exec_pol = parallel_execution::seq;
+    ForwardIt middle1;
+    ForwardIt middle2;
+    if (dist < threshold)
+    {
+        middle1 = partition(std::execution::seq, first, last,
+                            [pivot](const auto &em) { return em < pivot; });
+        middle2 = partition(std::execution::seq, middle1, last,
+                            [pivot](const auto &em) { return !(pivot < em); });
+    }
+    else
+    {
+        middle1 = partition(std::execution::par, first, last,
+                            [pivot](const auto &em) { return em < pivot; });
+        middle2 = partition(std::execution::par, middle1, last,
+                            [pivot](const auto &em) { return !(pivot < em); });
+    }
 
-    // ForwardIt middle1 = partition(exec_pol, first, last,
+    // ForwardIt middle1 = partition(first, last,
     //                               [pivot](const auto &em) { return em < pivot; });
-    // ForwardIt middle2 = partition(exec_pol, middle1, last,
+    // ForwardIt middle2 = partition(middle1, last,
     //                               [pivot](const auto &em) { return !(pivot < em); });
-
-    ForwardIt middle1 = partition(first, last,
-                                  [pivot](const auto &em) { return em < pivot; });
-    ForwardIt middle2 = partition(middle1, last,
-                                  [pivot](const auto &em) { return !(pivot < em); });
     quicksort(first, middle1);
     quicksort(middle2, last);
 }
@@ -47,27 +55,29 @@ auto randomNumberBetween = [](int low, int high) {
     return randomFunc;
 };
 
-int main()
+int main(int argc, char *argv[])
 {
-    vector<int> numbers;
-    generate_n(back_inserter(numbers), 500, randomNumberBetween(1, 100));
-
-    cout << "Unsorted:" << endl;
-    for (auto &n : numbers)
-    {
-        cout << n << ", ";
+    size_t size;
+    if (argc > 1) {
+        stringstream s(argv[1]);
+        s >> size;
+        if (argc > 2) {
+            s = stringstream(argv[2]);
+            s >> threshold;
+        } else {
+            threshold = size;
+        }
+    } else {
+        size = 10000;
+        threshold = size;
     }
-    cout << endl;
+    vector<int> numbers;
+    generate_n(back_inserter(numbers), size, randomNumberBetween(1, size));
 
+    cout << "Vector size:" << size << " sorting with parallel threshold: " << threshold << endl;
     const auto startTime = high_resolution_clock::now();
     quicksort(numbers.begin(), numbers.end());
     const auto endTime = high_resolution_clock::now();
 
-    cout << "Sorted:" << endl;
-    for (auto &n : numbers)
-    {
-        cout << n << ", ";
-    }
-    cout << endl;
     cout << "Duration: " << duration_cast<duration<double, milli>>(endTime - startTime).count() << " milliseconds" << endl;
 }
