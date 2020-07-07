@@ -8,3 +8,5 @@ add_subdirectory(./apps/HelloWorld)
 # Data Structures
 add_subdirectory(./struct/LinkedHashMap)
 
+# Sorting
+add_subdirectory(./sort/QuickSort)
